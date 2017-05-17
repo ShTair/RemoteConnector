@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:RemoteConnector.Views"
         mc:Ignorable="d"
         d:DataContext="{d:DesignData /Samples/MainSample.xaml}"
-        Title="リモートコネクタ" Height="300" Width="300" ResizeMode="CanResizeWithGrip">
+        Title="リモートコネクタ" Height="300" Width="300" ResizeMode="CanResizeWithGrip"
+        Closed="Window_Closed">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="設定" Click="SettingsMenuItem_Click" />
@@ -39,6 +40,7 @@
                                     <StackPanel Grid.Column="1" Orientation="Horizontal">
                                         <TextBlock Text="{Binding Status}" />
                                         <Button Tag="{Binding}" Content="!" FontFamily="Wingdings" Width="20" Click="ItemEditButton_Click" />
+                                        <Button Command="{Binding}" CommandParameter="RDP" Width="20" Content="R" />
                                         <Button Command="{Binding}" CommandParameter="WinSCP" Width="20" Content="W" />
                                         <Button Command="{Binding}" CommandParameter="PuTTY" Width="20" Content="P" />
                                     </StackPanel>

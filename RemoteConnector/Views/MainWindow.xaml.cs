@@ -11,6 +11,20 @@ namespace RemoteConnector.Views
         public MainWindow()
         {
             InitializeComponent();
+
+            Left = Settings.Default.Left;
+            Top = Settings.Default.Top;
+            Width = Settings.Default.Width;
+            Height = Settings.Default.Height;
+        }
+
+        private void Window_Closed(object sender, System.EventArgs e)
+        {
+            Settings.Default.Left = Left;
+            Settings.Default.Top = Top;
+            Settings.Default.Width = Width;
+            Settings.Default.Height = Height;
+            Settings.Default.Save();
         }
 
         private void SettingsMenuItem_Click(object sender, RoutedEventArgs e)
@@ -27,6 +41,11 @@ namespace RemoteConnector.Views
                 Settings.Default.WinSCPPath = w.WinSCPPathBox.Path;
                 Settings.Default.Save();
             }
+        }
+
+        private void ItemEditButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
