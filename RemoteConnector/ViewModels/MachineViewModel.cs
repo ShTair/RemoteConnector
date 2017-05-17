@@ -22,7 +22,7 @@ namespace RemoteConnector.ViewModels
 
         public string MacAddress { get; }
 
-        public string ImageUrl => $"https://github.com/identicons/{MacAddress}.png";
+        public string ImageUrl => $"https://github.com/identicons/ShTair.png";
 
         public bool IsDisposed { get; private set; }
 

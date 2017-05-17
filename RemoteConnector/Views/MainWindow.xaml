@@ -5,14 +5,49 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RemoteConnector.Views"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignData /Samples/MainSample.xaml}"
         Title="リモートコネクタ" Height="300" Width="300" ResizeMode="CanResizeWithGrip">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="設定" Click="SettingsMenuItem_Click" />
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
-            <StatusBarItem Content="test" />
+            <StatusBarItem Content="{Binding Status}" />
         </StatusBar>
-        <ListBox></ListBox>
+        <ItemsControl ItemsSource="{Binding Machines}" Padding="1.5">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="Black" BorderThickness="1" Margin="1.5" Padding="1" >
+                        <DockPanel>
+                            <Image DockPanel.Dock="Left" Source="{Binding ImageUrl}" Width="40" Margin="2" />
+                            <StackPanel>
+                                <StackPanel.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Margin" Value="3" />
+                                    </Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Width" Value="20" />
+                                        <Setter Property="Height" Value="20" />
+                                    </Style>
+                                </StackPanel.Resources>
+                                <TextBlock Text="{Binding Name}" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Status}" />
+                                        <Button Tag="{Binding}" Content="!" FontFamily="Wingdings" Width="20" Click="ItemEditButton_Click" />
+                                        <Button Command="{Binding}" CommandParameter="WinSCP" Width="20" Content="W" />
+                                        <Button Command="{Binding}" CommandParameter="PuTTY" Width="20" Content="P" />
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </DockPanel>
 </Window>

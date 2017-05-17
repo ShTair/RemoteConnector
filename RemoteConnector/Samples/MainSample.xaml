@@ -1,0 +1,8 @@
+﻿<local:MainViewModel xmlns:local="clr-namespace:RemoteConnector.ViewModels"
+                     Status="デザイン中">
+    <local:MainViewModel.Machines>
+        <local:MachineViewModel Name="00:00:00:00:00:00" Status="○" ImageUrl="https://github.com/identicons/ShTair.png" />
+        <local:MachineViewModel Name="00:00:00:00:00:00" Status="○" ImageUrl="https://github.com/identicons/ShTair.png" />
+        <local:MachineViewModel Name="00:00:00:00:00:00" Status="○" ImageUrl="https://github.com/identicons/ShTair.png" />
+    </local:MainViewModel.Machines>
+</local:MainViewModel>
