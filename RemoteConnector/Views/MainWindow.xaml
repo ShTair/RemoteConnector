@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RemoteConnector.Views"
         mc:Ignorable="d"
-        Title="リモートコネクタ" Height="300" Width="300">
+        Title="リモートコネクタ" Height="300" Width="300" ResizeMode="CanResizeWithGrip">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="設定" Click="SettingsMenuItem_Click" />
@@ -13,6 +13,6 @@
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem Content="test" />
         </StatusBar>
-        <Grid />
+        <ListBox></ListBox>
     </DockPanel>
 </Window>
