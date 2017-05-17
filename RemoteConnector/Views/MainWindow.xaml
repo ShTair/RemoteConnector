@@ -11,6 +11,7 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="設定" Click="SettingsMenuItem_Click" />
+            <MenuItem Header="再チェック" Click="RecheckMenuItem_Click" />
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem Content="{Binding Status}" />

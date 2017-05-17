@@ -21,30 +21,6 @@ namespace RemoteConnector.ViewModels
 
         public ObservableCollection<MachineViewModel> Machines { get; }
 
-        public string Putty
-        {
-            get { return Settings.Default.PuTTYPath; }
-            set { Settings.Default.PuTTYPath = value; }
-        }
-
-        public string Session
-        {
-            get { return Settings.Default.PuTTYSession; }
-            set { Settings.Default.PuTTYSession = value; }
-        }
-
-        public string WinSCP
-        {
-            get { return Settings.Default.WinSCPPath; }
-            set { Settings.Default.WinSCPPath = value; }
-        }
-
-        public string Macs => "";
-        //{
-        //    get { return Settings.Default.Macs; }
-        //    set { Settings.Default.Macs = value; }
-        //}
-
         public string Status
         {
             get { return _Status; }
@@ -71,10 +47,12 @@ namespace RemoteConnector.ViewModels
         {
             Status = "Searching...";
             var vms = await Task.Run(() => Check());
+
             foreach (var item in Machines)
             {
                 item.Dispose();
             }
+
             Machines.Clear();
             foreach (var item in vms)
             {
@@ -82,23 +60,24 @@ namespace RemoteConnector.ViewModels
                 item.RunWinSCP += () => StartWinSCP(item.IPAddress);
                 Machines.Add(item);
             }
-            Status = $"{Machines.Count} RaspberryPis found.";
+
+            Status = $"{Machines.Count} devices found.";
         }
 
         private void StartPuTTY(string host)
         {
-            if (!File.Exists(Putty))
+            if (!File.Exists(Settings.Default.PuTTYPath))
             {
                 Status = "PuTTY Path Required";
                 return;
             }
-            if (string.IsNullOrWhiteSpace(Session))
+            if (string.IsNullOrWhiteSpace(Settings.Default.PuTTYSession))
             {
                 Status = "Session Name Required";
                 return;
             }
 
-            var keyName = $@"SOFTWARE\SimonTatham\PuTTY\Sessions\{Session}";
+            var keyName = $@"SOFTWARE\SimonTatham\PuTTY\Sessions\{Settings.Default.PuTTYSession}";
             using (var key = Registry.CurrentUser.OpenSubKey(keyName, true))
             {
                 if (key == null)
@@ -111,8 +90,8 @@ namespace RemoteConnector.ViewModels
 
             var pi = new ProcessStartInfo
             {
-                FileName = Putty,
-                Arguments = $"-load {Session} -pw raspberry",
+                FileName = Settings.Default.PuTTYPath,
+                Arguments = $"-load {Settings.Default.PuTTYSession} -pw raspberry",
             };
             Process.Start(pi);
             Status = "Connecting...";
@@ -120,7 +99,7 @@ namespace RemoteConnector.ViewModels
 
         private void StartWinSCP(string host)
         {
-            if (!File.Exists(WinSCP))
+            if (!File.Exists(Settings.Default.WinSCPPath))
             {
                 Status = "WinSCP Path Required";
                 return;
@@ -128,7 +107,7 @@ namespace RemoteConnector.ViewModels
 
             var pi = new ProcessStartInfo
             {
-                FileName = WinSCP,
+                FileName = Settings.Default.WinSCPPath,
                 Arguments = $"pi:raspberry@{host}",
             };
             Process.Start(pi);
@@ -163,11 +142,10 @@ namespace RemoteConnector.ViewModels
                 data = await p.StandardOutput.ReadToEndAsync();
             }
 
-            var macs = Macs.Split(',');
             var ms = r.Matches(data);
             return (from en in ms.Cast<Match>()
                     let vm = new MachineViewModel(en.Groups[1].Value, en.Groups[2].Value)
-                    where macs.Any(t => vm.MacAddress.StartsWith(t))
+                    where Settings.Default.MacAddresses.Cast<string>().Any(t => Regex.IsMatch(vm.MacAddress, t))
                     select vm).ToList();
         }
     }

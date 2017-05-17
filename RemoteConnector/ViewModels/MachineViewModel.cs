@@ -36,7 +36,7 @@ namespace RemoteConnector.ViewModels
                 PropertyChanged?.Invoke(this, _NameChangedEventArgs);
             }
         }
-        private string _Name = "Loading...";
+        private string _Name;
         private PropertyChangedEventArgs _NameChangedEventArgs = new PropertyChangedEventArgs(nameof(Name));
 
         public string Status
@@ -58,6 +58,7 @@ namespace RemoteConnector.ViewModels
         {
             IPAddress = ip;
             MacAddress = mac;
+            Name = mac;
 
             //Task.Run(() => LoadName());
             //Task.Run(() => Pinging());

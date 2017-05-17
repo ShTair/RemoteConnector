@@ -1,4 +1,5 @@
 ﻿using RemoteConnector.Properties;
+using RemoteConnector.ViewModels;
 using System.Windows;
 
 namespace RemoteConnector.Views
@@ -8,6 +9,8 @@ namespace RemoteConnector.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainViewModel ViewModel => (MainViewModel)DataContext;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -16,6 +19,8 @@ namespace RemoteConnector.Views
             Top = Settings.Default.Top;
             Width = Settings.Default.Width;
             Height = Settings.Default.Height;
+
+            DataContext = new MainViewModel();
         }
 
         private void Window_Closed(object sender, System.EventArgs e)
@@ -41,6 +46,11 @@ namespace RemoteConnector.Views
                 Settings.Default.WinSCPPath = w.WinSCPPathBox.Path;
                 Settings.Default.Save();
             }
+        }
+
+        private void RecheckMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            _ = ViewModel.Refresh();
         }
 
         private void ItemEditButton_Click(object sender, RoutedEventArgs e)
