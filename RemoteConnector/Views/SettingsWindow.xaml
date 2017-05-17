@@ -32,11 +32,11 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Text="PuTTYのパス" />
-            <local:CommonOpenFileControl Grid.Row="0" Grid.Column="1" IsFolderPicker="True" />
+            <local:CommonOpenFileControl Grid.Row="0" Grid.Column="1" IsFolderPicker="True" x:Name="PuTTYPathBox" />
             <TextBlock Grid.Row="1" Text="PuTTYのセッション名" />
-            <TextBox Grid.Row="1" Grid.Column="1" />
+            <TextBox Grid.Row="1" Grid.Column="1" Name="PuTTYSessionBox" />
             <TextBlock Grid.Row="2" Text="WinSCPのパス" />
-            <local:CommonOpenFileControl Grid.Row="2" Grid.Column="1" IsFolderPicker="True" />
+            <local:CommonOpenFileControl Grid.Row="2" Grid.Column="1" IsFolderPicker="True" x:Name="WinSCPPathBox" />
         </Grid>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
             <StackPanel.Resources>
@@ -45,7 +45,7 @@
                     <Setter Property="Margin" Value="3" />
                 </Style>
             </StackPanel.Resources>
-            <Button Content="OK" IsDefault="True" />
+            <Button Content="OK" IsDefault="True" Click="Button_Click" />
             <Button Content="キャンセル" IsCancel="True" />
         </StackPanel>
     </StackPanel>

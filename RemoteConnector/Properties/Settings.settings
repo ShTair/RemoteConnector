@@ -6,7 +6,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PuTTYSession" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">RaspberryPi</Value>
     </Setting>
     <Setting Name="WinSCPPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

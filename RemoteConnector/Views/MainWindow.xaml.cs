@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RemoteConnector.Properties;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace RemoteConnector.Views
 {
@@ -22,6 +11,22 @@ namespace RemoteConnector.Views
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void SettingsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var w = new SettingsWindow { Owner = this };
+            w.PuTTYPathBox.Path = Settings.Default.PuTTYPath;
+            w.PuTTYSessionBox.Text = Settings.Default.PuTTYSession;
+            w.WinSCPPathBox.Path = Settings.Default.WinSCPPath;
+
+            if (w.ShowDialog() == true)
+            {
+                Settings.Default.PuTTYPath = w.PuTTYPathBox.Path;
+                Settings.Default.PuTTYSession = w.PuTTYSessionBox.Text;
+                Settings.Default.WinSCPPath = w.WinSCPPathBox.Path;
+                Settings.Default.Save();
+            }
         }
     }
 }
