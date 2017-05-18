@@ -164,8 +164,8 @@ namespace RemoteConnector.ViewModels
 
             var ms = r.Matches(data);
             return (from en in ms.Cast<Match>()
+                    where Settings.Default.MacAddresses.Cast<string>().Any(t => Regex.IsMatch(en.Groups[2].Value, t))
                     let vm = new MachineViewModel(en.Groups[1].Value, GetMachineInfo(en.Groups[2].Value))
-                    where Settings.Default.MacAddresses.Cast<string>().Any(t => Regex.IsMatch(vm.MachineInfo.MacAddress, t))
                     select vm).ToList();
         }
 
@@ -182,9 +182,17 @@ namespace RemoteConnector.ViewModels
                 }
 
                 _minfos[mac] = mi;
+                SaveMachineInfos();
             }
 
             return mi;
+        }
+
+        private void SaveMachineInfos()
+        {
+            var json = JsonConvert.SerializeObject(_minfos.Values);
+            Settings.Default.MachineInfos = json;
+            Settings.Default.Save();
         }
     }
 }
