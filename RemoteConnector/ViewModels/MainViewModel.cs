@@ -76,15 +76,15 @@ namespace RemoteConnector.ViewModels
             Machines.Clear();
             foreach (var item in vms)
             {
-                item.RunPuTTY += () => StartPuTTY(item.IPAddress);
-                item.RunWinSCP += () => StartWinSCP(item.IPAddress);
+                item.RunPuTTY += () => StartPuTTY(item);
+                item.RunWinSCP += () => StartWinSCP(item);
                 Machines.Add(item);
             }
 
             Status = $"{Machines.Count} devices found.";
         }
 
-        private void StartPuTTY(string host)
+        private void StartPuTTY(MachineViewModel machine)
         {
             if (!File.Exists(Settings.Default.PuTTYPath))
             {
@@ -105,19 +105,19 @@ namespace RemoteConnector.ViewModels
                     Status = "Not Found Session";
                     return;
                 }
-                key.SetValue("HostName", "pi@" + host);
+                key.SetValue("HostName", $"{machine.MachineInfo.UserName}@{machine.IPAddress}");
             }
 
             var pi = new ProcessStartInfo
             {
                 FileName = Settings.Default.PuTTYPath,
-                Arguments = $"-load {Settings.Default.PuTTYSession} -pw raspberry",
+                Arguments = $"-load {Settings.Default.PuTTYSession} -pw {machine.MachineInfo.Password}",
             };
             Process.Start(pi);
             Status = "Connecting...";
         }
 
-        private void StartWinSCP(string host)
+        private void StartWinSCP(MachineViewModel machine)
         {
             if (!File.Exists(Settings.Default.WinSCPPath))
             {
@@ -128,7 +128,7 @@ namespace RemoteConnector.ViewModels
             var pi = new ProcessStartInfo
             {
                 FileName = Settings.Default.WinSCPPath,
-                Arguments = $"pi:raspberry@{host}",
+                Arguments = $"{machine.MachineInfo.UserName}:{machine.MachineInfo.Password}@{machine.IPAddress}",
             };
             Process.Start(pi);
             Status = "Connecting...";
