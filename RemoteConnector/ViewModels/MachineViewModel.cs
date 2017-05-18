@@ -94,11 +94,11 @@ namespace RemoteConnector.ViewModels
 
         public void Execute(object parameter)
         {
-            //    switch ((string)parameter)
-            //    {
-            //        case "PuTTY": RunPuTTY?.Invoke(); break;
-            //        case "WinSCP": RunWinSCP?.Invoke(); break;
-            //    }
+            switch ((string)parameter)
+            {
+                case "PuTTY": RunPuTTY?.Invoke(); break;
+                case "WinSCP": RunWinSCP?.Invoke(); break;
+            }
         }
 
         //private async void Pinging()
