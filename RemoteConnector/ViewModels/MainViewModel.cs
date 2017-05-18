@@ -164,9 +164,27 @@ namespace RemoteConnector.ViewModels
 
             var ms = r.Matches(data);
             return (from en in ms.Cast<Match>()
-                    let vm = new MachineViewModel(en.Groups[1].Value, en.Groups[2].Value)
-                    where Settings.Default.MacAddresses.Cast<string>().Any(t => Regex.IsMatch(vm.MacAddress, t))
+                    let vm = new MachineViewModel(en.Groups[1].Value, GetMachineInfo(en.Groups[2].Value))
+                    where Settings.Default.MacAddresses.Cast<string>().Any(t => Regex.IsMatch(vm.MachineInfo.MacAddress, t))
                     select vm).ToList();
+        }
+
+        private MachineInfo GetMachineInfo(string mac)
+        {
+            MachineInfo mi;
+            if (!_minfos.TryGetValue(mac, out mi))
+            {
+                mi = new MachineInfo { MacAddress = mac, Name = mac };
+                if (mac.StartsWith("b8-27-eb"))
+                {
+                    mi.UserName = "pi";
+                    mi.Password = "raspberry";
+                }
+
+                _minfos[mac] = mi;
+            }
+
+            return mi;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RemoteConnector.Models;
+using System;
 using System.ComponentModel;
 using System.Net.NetworkInformation;
 using System.Threading;
@@ -19,26 +20,13 @@ namespace RemoteConnector.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string IPAddress { get; }
+        public MachineInfo MachineInfo { get; }
 
-        public string MacAddress { get; }
+        public string IPAddress { get; }
 
         public string ImageUrl => $"https://github.com/identicons/ShTair.png";
 
         public bool IsDisposed { get; private set; }
-
-        public string Name
-        {
-            get { return _Name; }
-            private set
-            {
-                if (_Name == value) return;
-                _Name = value;
-                PropertyChanged?.Invoke(this, _NameChangedEventArgs);
-            }
-        }
-        private string _Name;
-        private PropertyChangedEventArgs _NameChangedEventArgs = new PropertyChangedEventArgs(nameof(Name));
 
         public string Status
         {
@@ -55,11 +43,10 @@ namespace RemoteConnector.ViewModels
 
         #endregion
 
-        public MachineViewModel(string ip, string mac)
+        public MachineViewModel(string ip, MachineInfo mi)
         {
             IPAddress = ip;
-            MacAddress = mac;
-            Name = mac;
+            MachineInfo = mi;
 
             Task.Run(() => Pinging());
         }

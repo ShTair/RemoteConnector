@@ -1,8 +1,21 @@
 ﻿<local:MainViewModel xmlns:local="clr-namespace:RemoteConnector.ViewModels"
+                     xmlns:model="clr-namespace:RemoteConnector.Models"
                      Status="デザイン中">
     <local:MainViewModel.Machines>
-        <local:MachineViewModel Name="00-00-00-00-00-00" Status="○" ImageUrl="https://github.com/identicons/ShTair.png" />
-        <local:MachineViewModel Name="00-00-00-00-00-00" Status="○" ImageUrl="https://github.com/identicons/ShTair.png" />
-        <local:MachineViewModel Name="00-00-00-00-00-00" Status="○" ImageUrl="https://github.com/identicons/ShTair.png" />
+        <local:MachineViewModel Status="○" ImageUrl="https://github.com/identicons/ShTair.png">
+            <local:MachineViewModel.MachineInfo>
+                <model:MachineInfo Name="00-00-00-00-00-00" />
+            </local:MachineViewModel.MachineInfo>
+        </local:MachineViewModel>
+        <local:MachineViewModel Status="○" ImageUrl="https://github.com/identicons/ShTair.png">
+            <local:MachineViewModel.MachineInfo>
+                <model:MachineInfo Name="00-00-00-00-00-00" />
+            </local:MachineViewModel.MachineInfo>
+        </local:MachineViewModel>
+        <local:MachineViewModel Status="○" ImageUrl="https://github.com/identicons/ShTair.png">
+            <local:MachineViewModel.MachineInfo>
+                <model:MachineInfo Name="00-00-00-00-00-00" />
+            </local:MachineViewModel.MachineInfo>
+        </local:MachineViewModel>
     </local:MainViewModel.Machines>
 </local:MainViewModel>
