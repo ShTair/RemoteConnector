@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
+using System.Net.NetworkInformation;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -10,6 +9,8 @@ namespace RemoteConnector.ViewModels
 {
     class MachineViewModel : ICommand, INotifyPropertyChanged, IDisposable
     {
+        private SemaphoreSlim _s = new SemaphoreSlim(1);
+
         public event Action RunPuTTY;
         public event Action RunWinSCP;
         public event EventHandler CanExecuteChanged;
@@ -60,32 +61,8 @@ namespace RemoteConnector.ViewModels
             MacAddress = mac;
             Name = mac;
 
-            //Task.Run(() => LoadName());
-            //Task.Run(() => Pinging());
+            Task.Run(() => Pinging());
         }
-
-        //private async Task LoadName()
-        //{
-        //    using (var c = RPiContext.Create())
-        //    {
-        //        var m = await c.PiNames.FindAsync(MacAddress);
-        //        if (string.IsNullOrWhiteSpace(m?.Name)) Name = "Unknown";
-        //        else Name = m.Name;
-        //    }
-        //}
-
-        //public async Task UpdateName(string name)
-        //{
-        //    Name = "Updating...";
-        //    using (var c = RPiContext.Create())
-        //    {
-        //        var m = await c.PiNames.FindAsync(MacAddress);
-        //        if (m == null) c.PiNames.Add(m = new PiName { Id = MacAddress });
-        //        m.Name = name;
-        //        await c.SaveChangesAsync();
-        //    }
-        //    await LoadName();
-        //}
 
         public bool CanExecute(object parameter)
         {
@@ -101,20 +78,28 @@ namespace RemoteConnector.ViewModels
             }
         }
 
-        //private async void Pinging()
-        //{
-        //    var ping = new Ping();
-        //    while (!IsDisposed)
-        //    {
-        //        var result = await ping.SendPingAsync(IPAddress);
-        //        Status = (result.Status == IPStatus.Success) ? "○" : "×";
-        //        await Task.Delay(10000);
-        //    }
-        //}
+        private async void Pinging()
+        {
+            var ping = new Ping();
+            while (true)
+            {
+                await _s.WaitAsync();
+                try
+                {
+                    if (IsDisposed) break;
+                    var result = await ping.SendPingAsync(IPAddress);
+                    Status = (result.Status == IPStatus.Success) ? "○" : "×";
+                }
+                finally { _s.Release(); }
+                await Task.Delay(10000);
+            }
+        }
 
         public void Dispose()
         {
+            _s.Wait();
             IsDisposed = true;
+            _s.Release();
         }
     }
 }

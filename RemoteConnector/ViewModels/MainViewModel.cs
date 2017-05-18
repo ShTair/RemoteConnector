@@ -1,4 +1,6 @@
 ﻿using Microsoft.Win32;
+using Newtonsoft.Json;
+using RemoteConnector.Models;
 using RemoteConnector.Properties;
 using System;
 using System.Collections.Generic;
@@ -21,6 +23,8 @@ namespace RemoteConnector.ViewModels
 
         public ObservableCollection<MachineViewModel> Machines { get; }
 
+        private Dictionary<string, MachineInfo> _minfos;
+
         public string Status
         {
             get { return _Status; }
@@ -40,7 +44,23 @@ namespace RemoteConnector.ViewModels
             Settings.Default.PropertyChanged += (_, e) => PropertyChanged?.Invoke(this, e);
             Settings.Default.PropertyChanged += (_, __) => Settings.Default.Save();
             Machines = new ObservableCollection<MachineViewModel>();
+
+            LoadMachineInfos();
+
             var t = Refresh();
+        }
+
+        private void LoadMachineInfos()
+        {
+            try
+            {
+                var minfos = JsonConvert.DeserializeObject<List<MachineInfo>>(Settings.Default.MachineInfos);
+                _minfos = minfos.Distinct().ToDictionary(t => t.MacAddress);
+            }
+            catch
+            {
+                _minfos = new Dictionary<string, MachineInfo>();
+            }
         }
 
         public async Task Refresh()

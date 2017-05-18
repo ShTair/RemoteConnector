@@ -120,5 +120,17 @@ namespace RemoteConnector.Properties {
                 this["MacAddresses"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MachineInfos {
+            get {
+                return ((string)(this["MachineInfos"]));
+            }
+            set {
+                this["MachineInfos"] = value;
+            }
+        }
     }
 }

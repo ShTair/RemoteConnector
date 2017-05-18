@@ -1,8 +1,8 @@
 ﻿namespace RemoteConnector.Models
 {
-    class Machine
+    class MachineInfo
     {
-        public string Id { get; set; }
+        public string MacAddress { get; set; }
 
         public string Name { get; set; }
 
