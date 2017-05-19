@@ -36,13 +36,11 @@ namespace RemoteConnector.Views
         {
             var w = new SettingsWindow { Owner = this };
             w.PuTTYPathBox.Path = Settings.Default.PuTTYPath;
-            w.PuTTYSessionBox.Text = Settings.Default.PuTTYSession;
             w.WinSCPPathBox.Path = Settings.Default.WinSCPPath;
 
             if (w.ShowDialog() == true)
             {
                 Settings.Default.PuTTYPath = w.PuTTYPathBox.Path;
-                Settings.Default.PuTTYSession = w.PuTTYSessionBox.Text;
                 Settings.Default.WinSCPPath = w.WinSCPPathBox.Path;
                 Settings.Default.Save();
             }

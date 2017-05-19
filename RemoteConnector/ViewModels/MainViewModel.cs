@@ -91,13 +91,13 @@ namespace RemoteConnector.ViewModels
                 Status = "PuTTY Path Required";
                 return;
             }
-            if (string.IsNullOrWhiteSpace(Settings.Default.PuTTYSession))
+            if (string.IsNullOrWhiteSpace(machine.MachineInfo.PuTTYSession))
             {
                 Status = "Session Name Required";
                 return;
             }
 
-            var keyName = $@"SOFTWARE\SimonTatham\PuTTY\Sessions\{Settings.Default.PuTTYSession}";
+            var keyName = $@"SOFTWARE\SimonTatham\PuTTY\Sessions\{machine.MachineInfo.PuTTYSession}";
             using (var key = Registry.CurrentUser.OpenSubKey(keyName, true))
             {
                 if (key == null)
@@ -111,7 +111,7 @@ namespace RemoteConnector.ViewModels
             var pi = new ProcessStartInfo
             {
                 FileName = Settings.Default.PuTTYPath,
-                Arguments = $"-load {Settings.Default.PuTTYSession} -pw {machine.MachineInfo.Password}",
+                Arguments = $"-load {machine.MachineInfo.PuTTYSession} -pw {machine.MachineInfo.Password}",
             };
             Process.Start(pi);
             Status = "Connecting...";
@@ -164,28 +164,35 @@ namespace RemoteConnector.ViewModels
 
             var ms = r.Matches(data);
             return (from en in ms.Cast<Match>()
-                    where Settings.Default.MacAddresses.Cast<string>().Any(t => Regex.IsMatch(en.Groups[2].Value, t))
-                    let vm = new MachineViewModel(en.Groups[1].Value, GetMachineInfo(en.Groups[2].Value))
-                    select vm).ToList();
+                    let mi = GetMachineInfo(en.Groups[2].Value)
+                    where mi != null
+                    select new MachineViewModel(en.Groups[1].Value, mi)).ToList();
         }
 
         private MachineInfo GetMachineInfo(string mac)
         {
-            MachineInfo mi;
-            if (!_minfos.TryGetValue(mac, out mi))
+            if (Settings.Default.MacAddresses.Cast<string>().Any(t => Regex.IsMatch(mac, t))
+                || _minfos.ContainsKey(mac))
             {
-                mi = new MachineInfo { MacAddress = mac, Name = mac };
-                if (mac.StartsWith("b8-27-eb"))
+                MachineInfo mi;
+                if (!_minfos.TryGetValue(mac, out mi))
                 {
-                    mi.UserName = "pi";
-                    mi.Password = "raspberry";
+                    mi = new MachineInfo { MacAddress = mac, Name = mac };
+                    if (mac.StartsWith("b8-27-eb"))
+                    {
+                        mi.UserName = "pi";
+                        mi.Password = "raspberry";
+                        mi.PuTTYSession = "RaspberryPI";
+                    }
+
+                    _minfos[mac] = mi;
+                    SaveMachineInfos();
                 }
 
-                _minfos[mac] = mi;
-                SaveMachineInfos();
+                return mi;
             }
 
-            return mi;
+            return null;
         }
 
         private void SaveMachineInfos()

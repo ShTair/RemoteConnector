@@ -85,18 +85,6 @@ namespace RemoteConnector.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("RaspberryPi")]
-        public string PuTTYSession {
-            get {
-                return ((string)(this["PuTTYSession"]));
-            }
-            set {
-                this["PuTTYSession"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string WinSCPPath {
             get {
