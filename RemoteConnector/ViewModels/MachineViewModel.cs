@@ -24,7 +24,7 @@ namespace RemoteConnector.ViewModels
 
         public string IPAddress { get; }
 
-        public string ImageUrl => $"https://robohash.org/{MachineInfo.MacAddress.GetHashCode()}?set=set3&bgset=bg1&size=40x40";
+        public string ImageUrl => $"https://robohash.org/{MachineInfo.MacAddress.GetHashCode()}?set=set3&bgset=bg1";
 
         public bool IsDisposed { get; private set; }
 
