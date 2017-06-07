@@ -42,6 +42,7 @@
                                     <StackPanel Grid.Column="1" Orientation="Horizontal">
                                         <TextBlock Text="{Binding Status}" />
                                         <Button Tag="{Binding}" Content="!" FontFamily="Wingdings" Width="20" Click="ItemEditButton_Click" />
+                                        <Button Command="{Binding}" CommandParameter="Browser" Width="20" Content="B" />
                                         <Button Command="{Binding}" CommandParameter="RDP" Width="20" Content="R" />
                                         <Button Command="{Binding}" CommandParameter="WinSCP" Width="20" Content="W" />
                                         <Button Command="{Binding}" CommandParameter="PuTTY" Width="20" Content="P" />

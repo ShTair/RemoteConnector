@@ -78,6 +78,7 @@ namespace RemoteConnector.ViewModels
             {
                 item.RunPuTTY += () => StartPuTTY(item);
                 item.RunWinSCP += () => StartWinSCP(item);
+                item.RunBrowser += () => StartBrowser(item);
                 Machines.Add(item);
             }
 
@@ -132,6 +133,11 @@ namespace RemoteConnector.ViewModels
             };
             Process.Start(pi);
             Status = "Connecting...";
+        }
+
+        private void StartBrowser(MachineViewModel machine)
+        {
+            Process.Start($"http://{machine.IPAddress}");
         }
 
         private async Task<IList<MachineViewModel>> Check()

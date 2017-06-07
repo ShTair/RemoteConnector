@@ -14,6 +14,7 @@ namespace RemoteConnector.ViewModels
 
         public event Action RunPuTTY;
         public event Action RunWinSCP;
+        public event Action RunBrowser;
         public event EventHandler CanExecuteChanged;
 
         #region Properties
@@ -62,6 +63,7 @@ namespace RemoteConnector.ViewModels
             {
                 case "PuTTY": RunPuTTY?.Invoke(); break;
                 case "WinSCP": RunWinSCP?.Invoke(); break;
+                case "Browser": RunBrowser?.Invoke(); break;
             }
         }
 
