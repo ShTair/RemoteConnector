@@ -78,11 +78,11 @@ namespace RemoteConnector.ViewModels
                 try
                 {
                     if (IsDisposed) break;
-                    var result = await ping.SendPingAsync(IPAddress);
+                    var result = await ping.SendPingAsync(IPAddress, 10000);
                     Status = (result.Status == IPStatus.Success) ? "○" : "×";
                 }
                 finally { _s.Release(); }
-                await Task.Delay(10000);
+                await Task.Delay(20000);
             }
         }
 
