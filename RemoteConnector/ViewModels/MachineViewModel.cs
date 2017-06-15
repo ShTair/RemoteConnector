@@ -1,6 +1,7 @@
 ﻿using RemoteConnector.Models;
 using System;
 using System.ComponentModel;
+using System.IO;
 using System.Net.NetworkInformation;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,6 +38,7 @@ namespace RemoteConnector.ViewModels
                 if (_Status == value) return;
                 _Status = value;
                 PropertyChanged?.Invoke(this, _StatusChangedEventArgs);
+                File.AppendAllLines($"{MachineInfo.MacAddress}_{MachineInfo.Name}.log", new[] { $"{DateTime.Now:yyyy/MM/dd HH:mm:ss}\t{Status}" });
             }
         }
         private string _Status = "？";
