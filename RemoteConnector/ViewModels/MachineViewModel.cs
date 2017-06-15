@@ -1,4 +1,5 @@
 ﻿using RemoteConnector.Models;
+using RemoteConnector.Properties;
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -26,7 +27,7 @@ namespace RemoteConnector.ViewModels
 
         public string IPAddress { get; }
 
-        public string ImageUrl => $"https://robohash.org/{MachineInfo.MacAddress.GetHashCode()}?set=set3&bgset=bg1";
+        public string ImageUrl => string.Format(Settings.Default.IconBaseUrl, MachineInfo.MacAddress.GetHashCode());
 
         public bool IsDisposed { get; private set; }
 

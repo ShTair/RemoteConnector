@@ -97,6 +97,18 @@ namespace RemoteConnector.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://robohash.org/{0}?set=set3&bgset=bg1")]
+        public string IconBaseUrl {
+            get {
+                return ((string)(this["IconBaseUrl"]));
+            }
+            set {
+                this["IconBaseUrl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
             "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
             "tring>^b8-27-eb</string>\r\n  <string>^00-22-cf</string>\r\n</ArrayOfString>")]
