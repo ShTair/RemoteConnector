@@ -39,7 +39,7 @@ namespace RemoteConnector.ViewModels
                 if (_Status == value) return;
                 _Status = value;
                 PropertyChanged?.Invoke(this, _StatusChangedEventArgs);
-                File.AppendAllLines($"{MachineInfo.MacAddress}_{MachineInfo.Name}.log", new[] { $"{DateTime.Now:yyyy/MM/dd HH:mm:ss}\t{Status}" });
+                File.AppendAllLines($"log_{MachineInfo.Name}_{MachineInfo.MacAddress}.txt", new[] { $"{DateTime.Now:yyyy/MM/dd HH:mm:ss}\t{Status}\t{IPAddress}" });
             }
         }
         private string _Status = "？";
