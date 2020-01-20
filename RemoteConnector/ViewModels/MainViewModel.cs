@@ -184,7 +184,7 @@ namespace RemoteConnector.ViewModels
                 if (!_minfos.TryGetValue(mac, out mi))
                 {
                     mi = new MachineInfo { MacAddress = mac, Name = mac };
-                    if (mac.StartsWith("b8-27-eb"))
+                    if (mac.StartsWith("b8-27-eb") || mac.StartsWith("dc-a6-32"))
                     {
                         mi.UserName = "pi";
                         mi.Password = "raspberry";
