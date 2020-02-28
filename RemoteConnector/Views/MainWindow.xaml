@@ -4,11 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RemoteConnector.Views"
+        xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         mc:Ignorable="d"
         d:DataContext="{d:DesignData /Samples/MainSample.xaml}"
         Title="リモートコネクタ" Height="300" Width="300" ResizeMode="CanResizeWithGrip"
         Closed="Window_Closed"
         RenderOptions.BitmapScalingMode="Fant">
+    <Window.Resources>
+        <CollectionViewSource x:Key="Source1" Source="{Binding Machines}" IsLiveSortingRequested="True">
+            <CollectionViewSource.SortDescriptions>
+                <ComponentModel:SortDescription Direction="Ascending" PropertyName="MachineInfo.Name" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="設定" Click="SettingsMenuItem_Click" />
@@ -17,7 +25,7 @@
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem Content="{Binding Status}" />
         </StatusBar>
-        <ItemsControl ItemsSource="{Binding Machines}" Padding="1.5">
+        <ItemsControl ItemsSource="{Binding Source={StaticResource Source1}}" Padding="1.5">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border BorderBrush="Black" BorderThickness="1" Margin="1.5" Padding="1" >

@@ -20,10 +20,14 @@
     <Setting Name="WinSCPPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="IconBaseUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://robohash.org/{0}?set=set3&amp;bgset=bg1</Value>
+    </Setting>
     <Setting Name="MacAddresses" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;string&gt;^b8-27-eb&lt;/string&gt;
+  &lt;string&gt;^dc-a6-32&lt;/string&gt;
   &lt;string&gt;^00-22-cf&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>

@@ -37,11 +37,13 @@ namespace RemoteConnector.Views
             var w = new SettingsWindow { Owner = this };
             w.PuTTYPathBox.Path = Settings.Default.PuTTYPath;
             w.WinSCPPathBox.Path = Settings.Default.WinSCPPath;
+            w.IconBaseBox.Text = Settings.Default.IconBaseUrl;
 
             if (w.ShowDialog() == true)
             {
                 Settings.Default.PuTTYPath = w.PuTTYPathBox.Path;
                 Settings.Default.WinSCPPath = w.WinSCPPathBox.Path;
+                Settings.Default.IconBaseUrl = w.IconBaseBox.Text;
                 Settings.Default.Save();
             }
         }

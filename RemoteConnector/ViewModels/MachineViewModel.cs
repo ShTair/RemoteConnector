@@ -1,4 +1,5 @@
 ﻿using RemoteConnector.Models;
+using RemoteConnector.Properties;
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -26,7 +27,7 @@ namespace RemoteConnector.ViewModels
 
         public string IPAddress { get; }
 
-        public string ImageUrl => $"https://robohash.org/{MachineInfo.MacAddress.GetHashCode()}?set=set3&bgset=bg1";
+        public string ImageUrl => string.Format(Settings.Default.IconBaseUrl, MachineInfo.MacAddress.GetHashCode());
 
         public bool IsDisposed { get; private set; }
 
@@ -38,7 +39,7 @@ namespace RemoteConnector.ViewModels
                 if (_Status == value) return;
                 _Status = value;
                 PropertyChanged?.Invoke(this, _StatusChangedEventArgs);
-                File.AppendAllLines($"{MachineInfo.MacAddress}_{MachineInfo.Name}.log", new[] { $"{DateTime.Now:yyyy/MM/dd HH:mm:ss}\t{Status}" });
+                File.AppendAllLines($"log_{MachineInfo.Name}_{MachineInfo.MacAddress}.txt", new[] { $"{DateTime.Now:yyyy/MM/dd HH:mm:ss}\t{Status}\t{IPAddress}" });
             }
         }
         private string _Status = "？";
@@ -78,11 +79,11 @@ namespace RemoteConnector.ViewModels
                 try
                 {
                     if (IsDisposed) break;
-                    var result = await ping.SendPingAsync(IPAddress);
+                    var result = await ping.SendPingAsync(IPAddress, 10000);
                     Status = (result.Status == IPStatus.Success) ? "○" : "×";
                 }
                 finally { _s.Release(); }
-                await Task.Delay(10000);
+                await Task.Delay(20000);
             }
         }
 
