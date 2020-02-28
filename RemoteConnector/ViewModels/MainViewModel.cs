@@ -103,7 +103,7 @@ namespace RemoteConnector.ViewModels
             {
                 if (key == null)
                 {
-                    Status = "Not Found Session";
+                    Status = $"Not Found Session \"{machine.MachineInfo.PuTTYSession}\"";
                     return;
                 }
                 key.SetValue("HostName", $"{machine.MachineInfo.UserName}@{machine.IPAddress}");
