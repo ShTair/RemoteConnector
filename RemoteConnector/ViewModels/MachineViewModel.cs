@@ -27,6 +27,8 @@ namespace RemoteConnector.ViewModels
 
         public string IPAddress { get; }
 
+        public string IPAddressHost { get; }
+
         public string ImageUrl => string.Format(Settings.Default.IconBaseUrl, MachineInfo.MacAddress.GetHashCode());
 
         public bool IsDisposed { get; private set; }
@@ -50,6 +52,7 @@ namespace RemoteConnector.ViewModels
         public MachineViewModel(string ip, MachineInfo mi)
         {
             IPAddress = ip;
+            IPAddressHost = ip.Split('.')[3];
             MachineInfo = mi;
 
             Task.Run(() => Pinging());

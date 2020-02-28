@@ -41,7 +41,12 @@
                                         <Setter Property="Height" Value="20" />
                                     </Style>
                                 </StackPanel.Resources>
-                                <TextBlock Text="{Binding MachineInfo.Name}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding MachineInfo.Name}" />
+                                    <TextBlock Text="[" />
+                                    <TextBlock Text="{Binding IPAddressHost}" />
+                                    <TextBlock Text="]" />
+                                </StackPanel>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
