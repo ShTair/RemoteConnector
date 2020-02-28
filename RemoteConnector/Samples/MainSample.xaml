@@ -2,17 +2,17 @@
                      xmlns:model="clr-namespace:RemoteConnector.Models"
                      Status="デザイン中">
     <local:MainViewModel.Machines>
-        <local:MachineViewModel Status="○" ImageUrl="https://github.com/identicons/ShTair.png">
+        <local:MachineViewModel Status="○" ImageUrl="https://github.com/identicons/ShTair.png" IPAddressHost="1">
             <local:MachineViewModel.MachineInfo>
                 <model:MachineInfo Name="00-00-00-00-00-00" />
             </local:MachineViewModel.MachineInfo>
         </local:MachineViewModel>
-        <local:MachineViewModel Status="○" ImageUrl="https://github.com/identicons/ShTair.png">
+        <local:MachineViewModel Status="○" ImageUrl="https://github.com/identicons/ShTair.png" IPAddressHost="10">
             <local:MachineViewModel.MachineInfo>
                 <model:MachineInfo Name="00-00-00-00-00-00" />
             </local:MachineViewModel.MachineInfo>
         </local:MachineViewModel>
-        <local:MachineViewModel Status="○" ImageUrl="https://github.com/identicons/ShTair.png">
+        <local:MachineViewModel Status="○" ImageUrl="https://github.com/identicons/ShTair.png" IPAddressHost="100">
             <local:MachineViewModel.MachineInfo>
                 <model:MachineInfo Name="00-00-00-00-00-00" />
             </local:MachineViewModel.MachineInfo>
